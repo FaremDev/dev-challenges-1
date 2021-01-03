@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 /*TODO : add the loading-bar module */
@@ -39,4 +40,11 @@ function UploaderLoading() {
     )
 }
 
-export default UploaderLoading;
+function mapStateToProps({ files }) {  
+    return {
+      fileUploadingState: files.uploadingState
+    };
+  }
+  
+  export default connect(mapStateToProps)(UploaderLoading);
+  

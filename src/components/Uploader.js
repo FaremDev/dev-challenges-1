@@ -1,4 +1,6 @@
 import React, { useState, useRef }  from 'react';
+import { connect } from 'react-redux'
+import { launchFileUpload } from '../store/actions'
 import styled from 'styled-components' 
 
 const UploaderContainer = styled.div`
@@ -48,9 +50,8 @@ const Button = styled.div`
   border: 2px solid blue;
 `
 
-const Uploader = () => {
+const Uploader = (props) => {
     const inputFile = useRef(null) 
-    const [image, setImage] = useState('');
 
     const onButtonClick = () => {
         inputFile.current.click();
@@ -58,8 +59,7 @@ const Uploader = () => {
 
     const grabImage = (e) => {
         console.log(e.target.files[0]);
-        setImage(e.target.files[0]);
-        console.log(image);
+        props.dispatch(launchFileUpload(e.target.files[0]))
     }
 
     return (
@@ -78,4 +78,11 @@ const Uploader = () => {
     )
 }
 
-export default Uploader;
+
+function mapStateToProps({ files }) {  
+    return {
+      fileUploadingState: files.uploadingState
+    };
+  }
+  
+  export default connect(mapStateToProps)(Uploader);

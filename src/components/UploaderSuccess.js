@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import styled from 'styled-components' 
 
 const UploaderSuccessContainer = styled.div`
@@ -61,4 +62,11 @@ const UploaderSuccess = () => {
     )
 }
 
-export default UploaderSuccess;
+function mapStateToProps({ files }) {  
+    return {
+      fileUploadingState: files.uploadingState
+    };
+  }
+  
+  export default connect(mapStateToProps)(UploaderSuccess);
+  
