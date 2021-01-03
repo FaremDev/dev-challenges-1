@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { resetUploadState } from '../store/actions'
 import styled from 'styled-components' 
 
 const UploaderSuccessContainer = styled.div`
@@ -25,15 +26,9 @@ const Title = styled.div`
     margin: 15px;
 `
 
-const Legend = styled.div`
-    color: gray;
-    font-style: italic;
-    margin: 15px;
-`
-
 const UploadedImage = styled.div`
+    display: flex;
     margin: 15px auto;
-    background-color: gray;
     width: 400px;
     height: 400px;
 `
@@ -49,14 +44,23 @@ const Button = styled.a`
   border: 2px solid blue;
 `
 
-const UploaderSuccess = () => {
+const UploaderSuccess = (props) => {
+    const goBack = () => {
+        props.dispatch(resetUploadState())
+    }
+
     return (
         <UploaderSuccessContainer>
             <Title>Uploaded successfully !</Title>
-            <UploadedImage />  
+            <UploadedImage>
+                <img src={props.fileUrl} alt='Uploaded file' style={{"maxWidth": '100%', 'maxHeight': '100%', 'width': 'auto', 'height': 'auto', 'margin': 'auto'}}/> 
+            </UploadedImage>  
             <div className="link-zone"> 
-                Link
+                <input type="text" readOnly value={props.fileUrl} />
                 <Button>Copy Link</Button>
+            </div> 
+            <div className="prev"> 
+                <Button onClick={goBack}>Go Back</Button>
             </div> 
         </UploaderSuccessContainer>
     )
@@ -64,7 +68,8 @@ const UploaderSuccess = () => {
 
 function mapStateToProps({ files }) {  
     return {
-      fileUploadingState: files.uploadingState
+      fileUploadingState: files.uploadingState,
+      fileUrl: files.fileUrl
     };
   }
   

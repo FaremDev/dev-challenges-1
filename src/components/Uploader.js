@@ -58,6 +58,7 @@ const Uploader = (props) => {
     }
 
     const grabImage = (e) => {
+        e.preventDefault()
         console.log(e.target.files[0]);
         props.dispatch(launchFileUpload(e.target.files[0]))
     }

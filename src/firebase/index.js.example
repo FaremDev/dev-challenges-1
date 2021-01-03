@@ -1,0 +1,21 @@
+import firebase from 'firebase/app'
+import 'firebase/storage'
+
+var firebaseConfig = {
+    apiKey: "",
+    authDomain: "firebaseapp.com",
+    projectId: "",
+    storageBucket: ".appspot.com",
+    messagingSenderId: "",
+    appId: "1:::"
+  };
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+
+export  {
+    storage, firebase as default
+  }
+ 
+ 

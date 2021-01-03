@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import LinearProgress from '@material-ui/core/LinearProgress';
 import styled from 'styled-components'
 
 /*TODO : add the loading-bar module */
@@ -34,7 +35,8 @@ function UploaderLoading() {
             <UploadingMessage>
                 Uploading...
             </UploadingMessage>
-            <div className="loading-bar">
+            <div className="loading-bar" style={{'marginTop': 40}}>
+                <LinearProgress />
             </div>
         </UploaderLoadingContainer>
     )
