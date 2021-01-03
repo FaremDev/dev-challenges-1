@@ -42,7 +42,7 @@ const Button = styled.a`
   border-radius: 7px;
   padding: 0.5rem 0;
   margin: 0.5rem 1rem;
-  width: 10rem;
+  width: 5rem;
   background: blue;
   color: white;
   border: 2px solid blue;
@@ -55,6 +55,7 @@ const UploaderSuccess = () => {
             <UploadedImage />  
             <div className="link-zone"> 
                 Link
+                <Button>Copy Link</Button>
             </div> 
         </UploaderSuccessContainer>
     )

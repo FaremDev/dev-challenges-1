@@ -6,8 +6,7 @@ import UploaderSuccess from './components/UploaderSuccess';
 function App() {
   return (
     <div className="App">
-      {/*<Uploader />*/}
-      <UploaderSuccess />
+      <Uploader />
     </div>
   );
 }

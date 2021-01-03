@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef }  from 'react';
 import styled from 'styled-components' 
 
 const UploaderContainer = styled.div`
@@ -37,7 +37,7 @@ const DragDropZone = styled.div`
     height: 400px;
 `
 
-const Button = styled.a`
+const Button = styled.div`
   display: inline-block;
   border-radius: 7px;
   padding: 0.5rem 0;
@@ -49,6 +49,19 @@ const Button = styled.a`
 `
 
 const Uploader = () => {
+    const inputFile = useRef(null) 
+    const [image, setImage] = useState('');
+
+    const onButtonClick = () => {
+        inputFile.current.click();
+    }
+
+    const grabImage = (e) => {
+        console.log(e.target.files[0]);
+        setImage(e.target.files[0]);
+        console.log(image);
+    }
+
     return (
         <UploaderContainer>
             <div className="instructions">
@@ -58,9 +71,8 @@ const Uploader = () => {
             <DragDropZone />  
             <div className="button-zone"> 
                 <Legend>or</Legend>
-                <Button>
-                    Choose a file...
-                </Button>
+                <input type='file' id='file' ref={inputFile} onChange={grabImage}  style={{display: 'none'}}/>
+                <Button onClick={onButtonClick}>Browse...</Button>
             </div> 
         </UploaderContainer>
     )
