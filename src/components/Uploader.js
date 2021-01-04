@@ -17,13 +17,19 @@ const UploaderContainer = styled.div`
     border-radius: 20px;
     box-shadow: 4px 10px 10px lightgray;
     width: 500px;
-    height: 600px;
+    height: 650px;
     padding: 20px 5px;
 `
 
 const Title = styled.div`
     color: black;
     font-size: 25px;
+    margin: 15px;
+`
+
+const ErrorMsg = styled.div`
+    color: red;
+    font-weight: bold;
     margin: 15px;
 `
 
@@ -83,6 +89,9 @@ const Uploader = (props) => {
                 <input type='file' id='file' ref={inputFile} onChange={grabImage} accept="image/*" style={{display: 'none'}}/>
                 <Button onClick={onButtonClick}>Browse...</Button>
             </div> 
+            {props.isErrorFormat && (<div className="error-zone">
+                <ErrorMsg>The file must be an image</ErrorMsg>
+            </div>)}
         </UploaderContainer>
     )
 }
@@ -90,7 +99,8 @@ const Uploader = (props) => {
 
 function mapStateToProps({ files }) {  
     return {
-      fileUploadingState: files.uploadingState
+      fileUploadingState: files.uploadingState,
+      isErrorFormat: files.isErrorFormat
     };
   }
   

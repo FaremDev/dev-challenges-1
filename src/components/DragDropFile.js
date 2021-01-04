@@ -22,7 +22,7 @@ const DragDropFile = (props) => {
     
       return (
         <Container {...getRootProps()}>
-          <input {...getInputProps()} />
+          <input accept="image/*" {...getInputProps()} />
           {
             isDragActive ?
               <p>Drop the files here ...</p> :

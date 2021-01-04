@@ -1,4 +1,4 @@
-import { SET_UPLOAD_STATE, SET_IMAGE_URL } from '../actions/files'
+import { SET_UPLOAD_STATE, SET_IMAGE_URL, SET_ERROR_FORMAT } from '../actions/files'
 
 export default function files (state = {uploadingState: 'NONE'}, action) {
     switch(action.type) {
@@ -12,6 +12,11 @@ export default function files (state = {uploadingState: 'NONE'}, action) {
                 ...state,
                 fileUrl: action.fileUrl
         };
+        case SET_ERROR_FORMAT:
+            return {
+                ...state,
+                isErrorFormat: action.isErrorFormat
+            }
         default:
             return state
     }
