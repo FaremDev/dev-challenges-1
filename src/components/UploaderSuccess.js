@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux'
 import { resetUploadState } from '../store/actions'
 import styled from 'styled-components' 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const UploaderSuccessContainer = styled.div`
     display: block;
@@ -42,9 +44,35 @@ const Button = styled.a`
   background: blue;
   color: white;
   border: 2px solid blue;
+  &:hover {
+      cursor: pointer;
+  }
 `
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
+
 const UploaderSuccess = (props) => {
+    const textInputRef = useRef(null);
+    const [openAlertCopiedSuccessfully, setOpenAlertCopiedSuccessfully] = useState(false);
+
+    const copyToClipboard = (e) => {
+        textInputRef.current.select();
+        document.execCommand('copy');
+        e.target.focus();
+        setOpenAlertCopiedSuccessfully(true)
+    }
+
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+        return;
+        }
+
+        setOpenAlertCopiedSuccessfully(false);
+    };
+
     const goBack = () => {
         props.dispatch(resetUploadState())
     }
@@ -56,12 +84,17 @@ const UploaderSuccess = (props) => {
                 <img src={props.fileUrl} alt='Uploaded file' style={{"maxWidth": '100%', 'maxHeight': '100%', 'width': 'auto', 'height': 'auto', 'margin': 'auto'}}/> 
             </UploadedImage>  
             <div className="link-zone"> 
-                <input type="text" readOnly value={props.fileUrl} />
-                <Button>Copy Link</Button>
+                <input type="text" ref={textInputRef} readOnly value={props.fileUrl} />
+                <Button onClick={copyToClipboard}>Copy Link</Button>
             </div> 
             <div className="prev"> 
                 <Button onClick={goBack}>Go Back</Button>
-            </div> 
+            </div>
+            <Snackbar open={openAlertCopiedSuccessfully} autoHideDuration={3000} onClose={handleClose}>
+                <Alert severity="success" onClose={handleClose}>
+                    Successfully copied URL to clipboard
+                </Alert>
+            </Snackbar>
         </UploaderSuccessContainer>
     )
 }

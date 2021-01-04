@@ -1,6 +1,7 @@
-import React, { useState, useRef }  from 'react';
+import React, { useRef }  from 'react';
 import { connect } from 'react-redux'
 import { launchFileUpload } from '../store/actions'
+import DragDropFile from './DragDropFile'
 import styled from 'styled-components' 
 
 const UploaderContainer = styled.div`
@@ -34,9 +35,11 @@ const Legend = styled.div`
 
 const DragDropZone = styled.div`
     margin: 15px auto;
-    background-color: gray;
+    background-color: #F6F8FB;
     width: 400px;
     height: 400px;
+    border-radius: 20px;
+    border: dashed 2px lightblue;
 `
 
 const Button = styled.div`
@@ -48,6 +51,10 @@ const Button = styled.div`
   background: blue;
   color: white;
   border: 2px solid blue;
+
+  &:hover {
+    cursor: pointer;
+}
 `
 
 const Uploader = (props) => {
@@ -59,7 +66,6 @@ const Uploader = (props) => {
 
     const grabImage = (e) => {
         e.preventDefault()
-        console.log(e.target.files[0]);
         props.dispatch(launchFileUpload(e.target.files[0]))
     }
 
@@ -69,10 +75,12 @@ const Uploader = (props) => {
                 <Title>Upload your image</Title>
                 <Legend>File should be JPG, PNG...</Legend>
             </div>  
-            <DragDropZone />  
+            <DragDropZone>
+                <DragDropFile />    
+            </DragDropZone>  
             <div className="button-zone"> 
                 <Legend>or</Legend>
-                <input type='file' id='file' ref={inputFile} onChange={grabImage}  style={{display: 'none'}}/>
+                <input type='file' id='file' ref={inputFile} onChange={grabImage} accept="image/*" style={{display: 'none'}}/>
                 <Button onClick={onButtonClick}>Browse...</Button>
             </div> 
         </UploaderContainer>
